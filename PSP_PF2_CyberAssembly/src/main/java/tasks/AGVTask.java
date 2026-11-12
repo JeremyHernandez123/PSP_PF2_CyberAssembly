@@ -4,10 +4,34 @@
  */
 package tasks;
 
+import java.time.Duration;
+import model.CintaTransportadora;
+
 /**
  *
  * @author Alumne
  */
-public class AGVTask {
+public class AGVTask implements Runnable{
+    private CintaTransportadora cintaTransportadora = new CintaTransportadora(10); 
+    private int id; 
     
+    public AGVTask(int id, CintaTransportadora cintaTransportadora){
+        this.id = id; 
+        this.cintaTransportadora = cintaTransportadora; 
+    }
+    
+    @Override
+    public void run(){
+        int contador = 0; 
+        
+        try {
+            while (!Thread.currentThread().isInterrupted()) {
+                Thread.sleep(500);
+                cintaTransportadora.depositar(contador);
+                contador++; 
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
 }

@@ -4,6 +4,8 @@
  */
 package tasks;
 
+import model.CintaTransportadora;
+
 /**
  *
  * @author Alumne
@@ -11,16 +13,25 @@ package tasks;
 public class RobotTask implements Runnable{
     
     private final int id;
+    private final CintaTransportadora cintaTransportadora;  
     
-    public RobotTask(int id) {
+    public RobotTask(int id, CintaTransportadora cintaTransportadora) {
         this.id = id;
+        this.cintaTransportadora = cintaTransportadora; 
     }
     
     
     @Override
     public void run(){
-        RobotTask robot = new RobotTask(1); 
-        Thread hilo = new Thread(robot); 
-        hilo.start();
+        try {
+            while (!Thread.currentThread().isInterrupted()) {
+                int rBateria = cintaTransportadora.retirar(); 
+                Thread.sleep(500);
+                IO.println("Robot " + id + " retira batería " + rBateria);
+            }
+           
+        } catch (InterruptedException  e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

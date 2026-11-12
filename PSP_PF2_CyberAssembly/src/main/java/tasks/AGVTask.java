@@ -12,7 +12,7 @@ import model.CintaTransportadora;
  * @author Alumne
  */
 public class AGVTask implements Runnable{
-    private CintaTransportadora cintaTransportadora = new CintaTransportadora(10); 
+    private CintaTransportadora cintaTransportadora;  
     private int id; 
     
     public AGVTask(int id, CintaTransportadora cintaTransportadora){
@@ -29,6 +29,7 @@ public class AGVTask implements Runnable{
                 Thread.sleep(500);
                 cintaTransportadora.depositar(contador);
                 contador++; 
+                System.out.println("AGV " + id + " deposita batería " + contador);
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();

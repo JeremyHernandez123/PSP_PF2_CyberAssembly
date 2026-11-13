@@ -20,13 +20,12 @@ public class RobotTask implements Runnable{
         this.cintaTransportadora = cintaTransportadora; 
     }
     
-    
     @Override
     public void run(){
         try {
             while (!Thread.currentThread().isInterrupted()) {
-                int rBateria = cintaTransportadora.retirar(); 
                 Thread.sleep(500);
+                int rBateria = cintaTransportadora.retirar(); 
                 IO.println("Robot " + id + " retira batería " + rBateria);
             }
            

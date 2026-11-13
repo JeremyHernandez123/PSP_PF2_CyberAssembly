@@ -4,10 +4,19 @@
  */
 package model;
 
+import java.util.concurrent.Semaphore;
+
 /**
  *
  * @author Alumne
  */
 public class CentralSoldadura {
+    private final Semaphore semafor; 
+    private final boolean[] ocupadas; 
+
+    public CentralSoldadura(int numEstacions) {
+        this.semafor = new Semaphore(numEstacions); 
+        this.ocupadas = new boolean[numEstacions]; 
+    }
     
 }

@@ -4,6 +4,7 @@
  */
 package app;
 
+import java.util.concurrent.Semaphore;
 import model.CintaTransportadora;
 import tasks.AGVTask;
 import tasks.RobotTask;

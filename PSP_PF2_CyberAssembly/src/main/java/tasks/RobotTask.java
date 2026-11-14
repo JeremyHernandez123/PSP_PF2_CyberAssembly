@@ -4,6 +4,7 @@
  */
 package tasks;
 
+import java.util.concurrent.Semaphore;
 import model.CintaTransportadora;
 
 /**
@@ -13,7 +14,7 @@ import model.CintaTransportadora;
 public class RobotTask implements Runnable{
     
     private final int id;
-    private final CintaTransportadora cintaTransportadora;  
+    private final CintaTransportadora cintaTransportadora; 
     
     public RobotTask(int id, CintaTransportadora cintaTransportadora) {
         this.id = id;
@@ -22,7 +23,7 @@ public class RobotTask implements Runnable{
     
     @Override
     public void run(){
-        try {
+        try { 
             while (!Thread.currentThread().isInterrupted()) {
                 Thread.sleep(500);
                 int rBateria = cintaTransportadora.retirar(); 

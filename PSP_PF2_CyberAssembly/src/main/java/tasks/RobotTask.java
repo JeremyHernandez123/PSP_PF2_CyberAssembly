@@ -18,16 +18,16 @@ public class RobotTask implements Runnable{
     
     private final int id;
     private final CintaTransportadora cinta; 
-    private final SupervisorCentral supervisor;
-    private final CentralSoldadura central; 
-    private final TaulerRegistre tauler; 
+    private final CentralSoldadura central;
+    private final TaulerRegistre tauler;
+    private final SupervisorCentral supervisor; 
     
-    public RobotTask(int id, CintaTransportadora cinta, SupervisorCentral supervisor, CentralSoldadura central, TaulerRegistre tauler) {
+    public RobotTask(int id, CintaTransportadora cinta, CentralSoldadura central, TaulerRegistre tauler, SupervisorCentral supervisor ) {
         this.id = id;
         this.cinta = cinta; 
+        this.central = central;
+        this.tauler = tauler;
         this.supervisor = supervisor; 
-        this.central = central; 
-        this.tauler = tauler; 
     }
     
     @Override

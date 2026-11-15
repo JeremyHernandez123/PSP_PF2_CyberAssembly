@@ -5,7 +5,10 @@
 package tasks;
 
 import java.util.concurrent.Semaphore;
+import model.CentralSoldadura;
 import model.CintaTransportadora;
+import model.SupervisorCentral;
+import model.TaulerRegistre;
 
 /**
  *
@@ -14,22 +17,34 @@ import model.CintaTransportadora;
 public class RobotTask implements Runnable{
     
     private final int id;
-    private final CintaTransportadora cintaTransportadora; 
+    private final CintaTransportadora cinta; 
+    private final SupervisorCentral supervisor;
+    private final CentralSoldadura central; 
+    private final TaulerRegistre tauler; 
     
-    public RobotTask(int id, CintaTransportadora cintaTransportadora) {
+    public RobotTask(int id, CintaTransportadora cinta, SupervisorCentral supervisor, CentralSoldadura central, TaulerRegistre tauler) {
         this.id = id;
-        this.cintaTransportadora = cintaTransportadora; 
+        this.cinta = cinta; 
+        this.supervisor = supervisor; 
+        this.central = central; 
+        this.tauler = tauler; 
     }
     
     @Override
     public void run(){
         try { 
             while (!Thread.currentThread().isInterrupted()) {
-                Thread.sleep(500);
-                int rBateria = cintaTransportadora.retirar(); 
-                IO.println("Robot " + id + " retira batería " + rBateria);
+                supervisor.esperarAlerta();
+                int rBateria = cinta.retirar(); 
+                
+                int estacio = central.entrarEstacion(); 
+                try{
+                    Thread.sleep(300);
+                    tauler.firmarCertificado(id); 
+                } finally {
+                    central.salirEstacion(estacio);
+                }
             }
-           
         } catch (InterruptedException  e) {
             Thread.currentThread().interrupt();
         }

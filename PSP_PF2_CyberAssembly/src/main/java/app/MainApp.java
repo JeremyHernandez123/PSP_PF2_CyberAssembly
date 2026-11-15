@@ -11,6 +11,7 @@ import model.SupervisorCentral;
 import model.TaulerRegistre;
 import tasks.AGVTask;
 import tasks.RobotTask;
+import tasks.SupervisorTask;
 
 /**
  *
@@ -24,6 +25,7 @@ public class MainApp {
         SupervisorCentral supervisor = new SupervisorCentral();  
         
         Thread avg1 = new Thread(new AGVTask(1, c1));
+        Thread sup1 = new Thread(new SupervisorTask(supervisor));
         
         Thread rt1 = new Thread(new RobotTask(1, c1, central, tauler, supervisor));
         Thread rt2 = new Thread(new RobotTask(2, c1, central, tauler, supervisor));
@@ -32,15 +34,19 @@ public class MainApp {
         Thread rt5 = new Thread(new RobotTask(5, c1, central, tauler, supervisor));
         
         avg1.start();
+        sup1.start();    
+        
         rt1.start();
         rt2.start();
         rt3.start();
         rt4.start();
         rt5.start();
         
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         
         avg1.interrupt();
+        sup1.interrupt();   
+        
         rt1.interrupt();
         rt2.interrupt();
         rt3.interrupt();
@@ -48,6 +54,7 @@ public class MainApp {
         rt5.interrupt();
         
         avg1.join();
+        sup1.join();
         
         rt1.join();
         rt2.join();

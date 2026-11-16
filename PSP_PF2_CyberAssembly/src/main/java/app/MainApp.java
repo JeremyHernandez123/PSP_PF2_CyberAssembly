@@ -4,6 +4,8 @@
  */
 package app;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Semaphore;
 import model.CentralSoldadura;
 import model.CintaTransportadora;
@@ -24,26 +26,43 @@ public class MainApp {
         CentralSoldadura central = new CentralSoldadura(3);
         TaulerRegistre tauler= new TaulerRegistre();
         SupervisorCentral supervisor = new SupervisorCentral();  
+        List<RobotTask> llistaRobots = new ArrayList<>();     
+        
+        
+        
+        RobotTask rbt1 = new RobotTask(1, c1, central, tauler, supervisor); 
+        RobotTask rbt2 = new RobotTask(2, c1, central, tauler, supervisor); 
+        RobotTask rbt3 = new RobotTask(3, c1, central, tauler, supervisor); 
+        RobotTask rbt4 = new RobotTask(4, c1, central, tauler, supervisor); 
+        RobotTask rbt5 = new RobotTask(5, c1, central, tauler, supervisor); 
+       
+        llistaRobots.add(rbt1); 
+        llistaRobots.add(rbt2); 
+        llistaRobots.add(rbt3); 
+        llistaRobots.add(rbt4); 
+        llistaRobots.add(rbt5); 
+        
+        Thread frt1 = new Thread(rbt1);
+        Thread frt2 = new Thread(rbt2);
+        Thread frt3 = new Thread(rbt3);
+        Thread frt4 = new Thread(rbt4);
+        Thread frt5 = new Thread(rbt5);
         
         Thread avg1 = new Thread(new AGVTask(1, c1));
         Thread sup1 = new Thread(new SupervisorTask(supervisor));
-        Thread dash = new Thread(new DashboardTask(c1, central, supervisor)); 
+        Thread dash = new Thread(new DashboardTask(c1, central, supervisor, llistaRobots)); 
+       
         
-        Thread rt1 = new Thread(new RobotTask(1, c1, central, tauler, supervisor));
-        Thread rt2 = new Thread(new RobotTask(2, c1, central, tauler, supervisor));
-        Thread rt3 = new Thread(new RobotTask(3, c1, central, tauler, supervisor));
-        Thread rt4 = new Thread(new RobotTask(4, c1, central, tauler, supervisor));
-        Thread rt5 = new Thread(new RobotTask(5, c1, central, tauler, supervisor));
         
         avg1.start();
         sup1.start(); 
         dash.start();
         
-        rt1.start();
-        rt2.start();
-        rt3.start();
-        rt4.start();
-        rt5.start();
+        frt1.start();
+        frt2.start();
+        frt3.start();
+        frt4.start();
+        frt5.start();
         
         Thread.sleep(10000);
         
@@ -51,21 +70,21 @@ public class MainApp {
         sup1.interrupt();   
         dash.interrupt();
         
-        rt1.interrupt();
-        rt2.interrupt();
-        rt3.interrupt();
-        rt4.interrupt();
-        rt5.interrupt();
+        frt1.interrupt();
+        frt2.interrupt();
+        frt3.interrupt();
+        frt4.interrupt();
+        frt5.interrupt();
         
         avg1.join();
         sup1.join();
         dash.join();
         
-        rt1.join();
-        rt2.join();
-        rt3.join();
-        rt4.join();
-        rt5.join();
+        frt1.join();
+        frt2.join();
+        frt3.join();
+        frt4.join();
+        frt5.join();
     }
     
 }

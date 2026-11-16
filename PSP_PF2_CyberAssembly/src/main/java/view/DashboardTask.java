@@ -4,10 +4,13 @@
  */
 package view;
 
+import java.util.ArrayList;
+import java.util.List;
 import model.CentralSoldadura;
 import model.CintaTransportadora;
 import model.EstatRobot;
 import model.SupervisorCentral;
+import tasks.RobotTask;
 
 /**
  *
@@ -17,11 +20,13 @@ public class DashboardTask implements Runnable {
     private final CintaTransportadora cinta; 
     private final CentralSoldadura central; 
     private final SupervisorCentral supervisor; 
+    private List<RobotTask> llistaRobots = new ArrayList<>(); 
     
-    public DashboardTask(CintaTransportadora cinta, CentralSoldadura central, SupervisorCentral supervisor, EstatRobot estatRobot){
+    public DashboardTask(CintaTransportadora cinta, CentralSoldadura central, SupervisorCentral supervisor, ArrayList<RobotTask> llistaRobots){
         this.cinta = cinta; 
         this.central = central; 
         this.supervisor = supervisor;
+        this.llistaRobots = llistaRobots; 
     }
     
     @Override

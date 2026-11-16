@@ -13,6 +13,7 @@ import model.SupervisorCentral;
 import model.TaulerRegistre;
 import tasks.AGVTask;
 import tasks.RobotTask;
+import tasks.SensorAvariesTask;
 import tasks.SupervisorTask;
 import view.ConsoleView;
 import view.DashboardTask;
@@ -46,7 +47,9 @@ public class MainApp {
         Thread avg1 = new Thread(new AGVTask(1, c1));
         Thread avg2 = new Thread(new AGVTask(2, c1));
         Thread sup1 = new Thread(new SupervisorTask(supervisor));
-        Thread dash = new Thread(new DashboardTask(c1, central, supervisor, (ArrayList<RobotTask>) llistaRobots)); 
+        Thread dash = new Thread(new DashboardTask(c1, central, supervisor, (ArrayList<RobotTask>) llistaRobots));
+        Thread sensor = new Thread(new SensorAvariesTask(central, vista)); 
+        sensor.setDaemon(true);
        
         Thread frt1 = new Thread(rbt1);
         Thread frt2 = new Thread(rbt2);
@@ -58,6 +61,7 @@ public class MainApp {
         avg2.start();
         sup1.start(); 
         dash.start();
+        sensor.start(); 
         
         frt1.start();
         frt2.start();

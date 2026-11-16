@@ -34,7 +34,7 @@ public class DashboardTask implements Runnable {
                     alerta = "No"; 
                 }   
                 
-                IO.println("Estaciones: " + central.getOcupadas() + ", " + central.getNumEstacion() + "\n Cinta: " + cinta.getOcupacion() + ", " + cinta.getCapacitat() + "\n Alerta: " +  alerta);
+                IO.println("Estaciones ocupadas: " + central.getOcupadas() + ", n: " + central.getNumEstacion() + "\n Cinta: " + cinta.getOcupacion() + ", capacitat: " + cinta.getCapacitat() + "\n Alerta: " +  alerta);
                 Thread.sleep(1000);
             }
         } catch(InterruptedException e) {

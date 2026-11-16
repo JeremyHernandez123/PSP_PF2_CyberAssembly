@@ -12,6 +12,7 @@ import model.TaulerRegistre;
 import tasks.AGVTask;
 import tasks.RobotTask;
 import tasks.SupervisorTask;
+import view.DashboardTask;
 
 /**
  *
@@ -26,6 +27,7 @@ public class MainApp {
         
         Thread avg1 = new Thread(new AGVTask(1, c1));
         Thread sup1 = new Thread(new SupervisorTask(supervisor));
+        Thread dash = new Thread(new DashboardTask(c1, central, supervisor)); 
         
         Thread rt1 = new Thread(new RobotTask(1, c1, central, tauler, supervisor));
         Thread rt2 = new Thread(new RobotTask(2, c1, central, tauler, supervisor));
@@ -34,7 +36,8 @@ public class MainApp {
         Thread rt5 = new Thread(new RobotTask(5, c1, central, tauler, supervisor));
         
         avg1.start();
-        sup1.start();    
+        sup1.start(); 
+        dash.start();
         
         rt1.start();
         rt2.start();
@@ -46,6 +49,7 @@ public class MainApp {
         
         avg1.interrupt();
         sup1.interrupt();   
+        dash.interrupt();
         
         rt1.interrupt();
         rt2.interrupt();
@@ -55,6 +59,7 @@ public class MainApp {
         
         avg1.join();
         sup1.join();
+        dash.join();
         
         rt1.join();
         rt2.join();

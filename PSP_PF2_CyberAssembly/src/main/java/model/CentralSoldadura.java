@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.util.Arrays;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -12,21 +13,23 @@ import java.util.concurrent.Semaphore;
  */
 public class CentralSoldadura {
     private final Semaphore semaforo; 
-    private final boolean[] ocupadas; 
+    private final EstatEstacio[] estacions; 
 
     public CentralSoldadura(int numEstacions) {
         this.semaforo = new Semaphore(numEstacions); 
-        this.ocupadas = new boolean[numEstacions]; 
+        this.estacions = new EstatEstacio[numEstacions]; 
+        Arrays.fill(estacions, EstatEstacio.LLIURE);
+
     }
     
     
     public int entrarEstacion() throws InterruptedException{
         semaforo.acquire(); 
         
-        synchronized (ocupadas) {
-            for (int i = 0; i < ocupadas.length; i++){
-                if(!ocupadas[i]) {
-                    ocupadas[i] = true; 
+        synchronized (estacions) {
+            for (int i = 0; i < estacions.length; i++){
+                if(estacions[i] == EstatEstacio.LLIURE) {
+                    estacions[i] = EstatEstacio.OCUPADA; 
                     return i; 
                 }
             }
@@ -35,27 +38,65 @@ public class CentralSoldadura {
     }
     
     public void salirEstacion(int estacio){
-        synchronized (ocupadas){
-            ocupadas[estacio] = false; 
+        synchronized (estacions){
+            estacions[estacio] = EstatEstacio.LLIURE; 
             
         }
         semaforo.release(); 
     }
     
-    public int getOcupadas() {
-        synchronized (ocupadas) {          
-            int n = 0;
-            for (boolean b : ocupadas) {
-                if (b) {
-                    n++;
+    public int averiarEstacioLliure() {
+        if (!semaforo.tryAcquire()) {
+            return -1;           // Devuelve -1 si no había ninguna estacion libre
+        }
+        synchronized (estacions) {
+            for (int i = 0; i < estacions.length; i++) {
+                if (estacions[i] == EstatEstacio.LLIURE) {
+                    estacions[i] = EstatEstacio.AVERIADA;
+                    return i;                                   }
+            }
+        }
+        semaforo.release();                 
+        return -1;  
+    }
+    
+    public int repararEstacio() {
+        int reparada = -1;
+        synchronized (estacions) {
+            for (int i = 0; i < estacions.length; i++) {
+                if (estacions[i] == EstatEstacio.AVERIADA) {
+                    estacions[i] = EstatEstacio.LLIURE;
+                    reparada = i;
+                    break;
                 }
+            }
+        }
+        if (reparada != -1) {
+            semaforo.release();           
+        }
+        return reparada;
+    }
+    
+    public int getOcupades() {
+        return contar(EstatEstacio.OCUPADA);
+    }
+
+    public int getAveriades() {
+        return contar(EstatEstacio.AVERIADA);
+    }
+
+    public int getNumEstacions() {
+        return estacions.length;
+    }
+
+    private int contar(EstatEstacio estat) {
+        synchronized (estacions) {
+            int n = 0;
+            for (EstatEstacio e : estacions) {
+                if (e == estat) n++;
             }
             return n;
         }
-    }
-
-    public int getNumEstacion() {
-        return ocupadas.length;   
     }
     
 }

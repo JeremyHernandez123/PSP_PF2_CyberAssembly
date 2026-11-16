@@ -34,6 +34,10 @@ public class RobotTask implements Runnable{
     
     public EstatRobot getEstat() {
         return estatRobot;
+    } 
+    
+    public int getId(){
+        return id;
     }
     @Override
     public void run(){

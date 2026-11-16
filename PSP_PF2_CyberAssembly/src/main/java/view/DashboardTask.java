@@ -40,9 +40,19 @@ public class DashboardTask implements Runnable {
                     alerta = "No"; 
                 }   
                 
+                String robotsTxt = "";
+                for (RobotTask r : llistaRobots) {
+                    robotsTxt = robotsTxt + "R" + r.getId() + ":" + r.getEstat() + "  ";
+                }
                 IO.println("Estaciones ocupadas: " + central.getOcupadas() + ", n: " + central.getNumEstacion() + "\n Cinta: " + cinta.getOcupacion() + ", capacitat: " + cinta.getCapacitat() + "\n Alerta: " +  alerta);
                 Thread.sleep(1000);
-            }
+                IO.println(" ---------------------------------------- ");
+                IO.println(" ");
+                IO.println("   Robots: " + robotsTxt);
+                IO.println(" ");
+                IO.println(" ---------------------------------------- ");
+                
+            }   
         } catch(InterruptedException e) {
             Thread.currentThread().interrupt();
         }

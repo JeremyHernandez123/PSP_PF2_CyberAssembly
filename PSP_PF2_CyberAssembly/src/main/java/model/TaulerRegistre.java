@@ -17,6 +17,7 @@ public class TaulerRegistre {
     public void firmarCertificado(int idRobot) throws InterruptedException{
         mutex.acquire(); 
         try {
+            IO.println(" ");
             IO.println("Robot " + idRobot + " firma el certificado");
             Thread.sleep(200); 
         } finally {

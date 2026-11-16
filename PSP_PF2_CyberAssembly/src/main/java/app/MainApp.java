@@ -28,8 +28,6 @@ public class MainApp {
         SupervisorCentral supervisor = new SupervisorCentral();  
         List<RobotTask> llistaRobots = new ArrayList<>();     
         
-        
-        
         RobotTask rbt1 = new RobotTask(1, c1, central, tauler, supervisor); 
         RobotTask rbt2 = new RobotTask(2, c1, central, tauler, supervisor); 
         RobotTask rbt3 = new RobotTask(3, c1, central, tauler, supervisor); 
@@ -42,17 +40,15 @@ public class MainApp {
         llistaRobots.add(rbt4); 
         llistaRobots.add(rbt5); 
         
+        Thread avg1 = new Thread(new AGVTask(1, c1));
+        Thread sup1 = new Thread(new SupervisorTask(supervisor));
+        Thread dash = new Thread(new DashboardTask(c1, central, supervisor, (ArrayList<RobotTask>) llistaRobots)); 
+       
         Thread frt1 = new Thread(rbt1);
         Thread frt2 = new Thread(rbt2);
         Thread frt3 = new Thread(rbt3);
         Thread frt4 = new Thread(rbt4);
         Thread frt5 = new Thread(rbt5);
-        
-        Thread avg1 = new Thread(new AGVTask(1, c1));
-        Thread sup1 = new Thread(new SupervisorTask(supervisor));
-        Thread dash = new Thread(new DashboardTask(c1, central, supervisor, llistaRobots)); 
-       
-        
         
         avg1.start();
         sup1.start(); 
@@ -85,6 +81,8 @@ public class MainApp {
         frt3.join();
         frt4.join();
         frt5.join();
+        
+       IO.println("Simulació finalitzada");
     }
     
 }

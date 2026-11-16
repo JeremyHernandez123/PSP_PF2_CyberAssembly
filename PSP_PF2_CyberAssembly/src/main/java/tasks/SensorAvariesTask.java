@@ -24,7 +24,17 @@ public class SensorAvariesTask implements Runnable{
     }
     
     @Override
-    public void run(){
-        
+    public void run() {
+        try {
+            while (true) {
+                Thread.sleep(1500 + random.nextInt(2000));
+                int estacio = central.averiarEstacioLliure();
+                if (estacio != -1) {
+                    vista.mostrar("Sensor: en la estacion: " + estacio);
+                }
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

@@ -7,6 +7,7 @@ package tasks;
 import java.util.concurrent.Semaphore;
 import model.CentralSoldadura;
 import model.CintaTransportadora;
+import model.EstatRobot;
 import model.SupervisorCentral;
 import model.TaulerRegistre;
 
@@ -21,8 +22,9 @@ public class RobotTask implements Runnable{
     private final CentralSoldadura central;
     private final TaulerRegistre tauler;
     private final SupervisorCentral supervisor; 
+    private EstatRobot estatRobot = EstatRobot.ESPERANT_ALERTA; 
     
-    public RobotTask(int id, CintaTransportadora cinta, CentralSoldadura central, TaulerRegistre tauler, SupervisorCentral supervisor ) {
+    public RobotTask(int id, CintaTransportadora cinta, CentralSoldadura central, TaulerRegistre tauler, SupervisorCentral supervisor) {
         this.id = id;
         this.cinta = cinta; 
         this.central = central;
@@ -30,16 +32,27 @@ public class RobotTask implements Runnable{
         this.supervisor = supervisor; 
     }
     
+    public EstatRobot getEstat() {
+        return estatRobot;
+    }
     @Override
     public void run(){
         try { 
             while (!Thread.currentThread().isInterrupted()) {
+                
+                estatRobot = EstatRobot.ESPERANT_ALERTA; 
                 supervisor.esperarAlerta();
+                
+                estatRobot = EstatRobot.ESPERANT_CINTA; 
                 int rBateria = cinta.retirar(); 
                 
+                estatRobot = EstatRobot.ESPERANT_ESTACIO; 
                 int estacio = central.entrarEstacion(); 
                 try{
+                    estatRobot = EstatRobot.SOLDANT; 
                     Thread.sleep(300);
+                    
+                    estatRobot = EstatRobot.SIGNANT; 
                     tauler.firmarCertificado(id); 
                 } finally {
                     central.salirEstacion(estacio);
@@ -47,6 +60,9 @@ public class RobotTask implements Runnable{
             }
         } catch (InterruptedException  e) {
             Thread.currentThread().interrupt();
+        } finally {
+            estatRobot = EstatRobot.ATURAT; 
         }
+        
     }
 }

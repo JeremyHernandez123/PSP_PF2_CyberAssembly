@@ -6,6 +6,7 @@ package view;
 
 import model.CentralSoldadura;
 import model.CintaTransportadora;
+import model.EstatRobot;
 import model.SupervisorCentral;
 
 /**
@@ -17,10 +18,10 @@ public class DashboardTask implements Runnable {
     private final CentralSoldadura central; 
     private final SupervisorCentral supervisor; 
     
-    public DashboardTask(CintaTransportadora cinta, CentralSoldadura central, SupervisorCentral supervisor){
+    public DashboardTask(CintaTransportadora cinta, CentralSoldadura central, SupervisorCentral supervisor, EstatRobot estatRobot){
         this.cinta = cinta; 
         this.central = central; 
-        this.supervisor = supervisor; 
+        this.supervisor = supervisor;
     }
     
     @Override

@@ -44,6 +44,7 @@ public class MainApp {
         llistaRobots.add(rbt5); 
         
         Thread avg1 = new Thread(new AGVTask(1, c1));
+        Thread avg2 = new Thread(new AGVTask(2, c1));
         Thread sup1 = new Thread(new SupervisorTask(supervisor));
         Thread dash = new Thread(new DashboardTask(c1, central, supervisor, (ArrayList<RobotTask>) llistaRobots)); 
        
@@ -54,6 +55,7 @@ public class MainApp {
         Thread frt5 = new Thread(rbt5);
         
         avg1.start();
+        avg2.start();
         sup1.start(); 
         dash.start();
         
@@ -66,6 +68,7 @@ public class MainApp {
         Thread.sleep(10000);
         
         avg1.interrupt();
+        avg2.interrupt();
         sup1.interrupt();   
         dash.interrupt();
         
@@ -76,6 +79,7 @@ public class MainApp {
         frt5.interrupt();
         
         avg1.join();
+        avg2.join();
         sup1.join();
         dash.join();
         

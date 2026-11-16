@@ -54,7 +54,7 @@ public class RobotTask implements Runnable{
                 int estacio = central.entrarEstacion(); 
                 try{
                     estatRobot = EstatRobot.SOLDANT; 
-                    Thread.sleep(300);
+                    Thread.sleep(1000);
                     
                     estatRobot = EstatRobot.SIGNANT; 
                     tauler.firmarCertificado(id); 

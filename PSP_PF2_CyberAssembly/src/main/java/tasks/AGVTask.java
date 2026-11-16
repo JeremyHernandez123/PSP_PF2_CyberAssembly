@@ -29,7 +29,7 @@ public class AGVTask implements Runnable{
                 Thread.sleep(500);
                 cintaTransportadora.depositar(contador);
                 contador++; 
-                System.out.println("AGV " + id + " deposita batería " + contador);
+                IO.println("AGV " + id + " deposita batería " + contador);
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();

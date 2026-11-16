@@ -15,11 +15,11 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class CintaTransportadora {
     
-    private ReentrantLock lock = new ReentrantLock(); 
+    private final ReentrantLock lock = new ReentrantLock(); 
     private final Condition cintaNoPlena = lock.newCondition(); 
     private final Condition  cintaNoBuida = lock.newCondition();
-    private int capacitat; 
-    Queue<Integer> cola = new LinkedList<>(); 
+    private final int capacitat; 
+    private final Queue<Integer> cola = new LinkedList<>(); 
             
     public CintaTransportadora(int capacitat) {
         this.capacitat = capacitat; 
@@ -52,4 +52,16 @@ public class CintaTransportadora {
         }
     }
     
+    public int getOcupacion() {
+        lock.lock();
+        try {
+            return cola.size();      
+        } finally {
+            lock.unlock();   
+        }
+    }
+
+    public int getCapacitat() {
+        return capacitat;  
+    }
 }

@@ -4,10 +4,41 @@
  */
 package view;
 
+import model.CentralSoldadura;
+import model.CintaTransportadora;
+import model.SupervisorCentral;
+
 /**
  *
  * @author Alumne
  */
-public class DashboardTask {
+public class DashboardTask implements Runnable {
+    private final CintaTransportadora cinta; 
+    private final CentralSoldadura central; 
+    private final SupervisorCentral supervisor; 
     
+    public DashboardTask(CintaTransportadora cinta, CentralSoldadura central, SupervisorCentral supervisor){
+        this.cinta = cinta; 
+        this.central = central; 
+        this.supervisor = supervisor; 
+    }
+    
+    @Override
+    public void run(){
+        try {
+            while(!Thread.currentThread().isInterrupted()) {
+                String alerta; 
+                if(supervisor.isActiva()){
+                    alerta = "Si"; 
+                }else {
+                    alerta = "No"; 
+                }   
+                
+                IO.println("Estaciones: " + central.getOcupadas() + ", " + central.getNumEstacion() + "\n Cinta: " + cinta.getOcupacion() + ", " + cinta.getCapacitat() + "\n Alerta: " +  alerta);
+                Thread.sleep(1000);
+            }
+        } catch(InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
 }

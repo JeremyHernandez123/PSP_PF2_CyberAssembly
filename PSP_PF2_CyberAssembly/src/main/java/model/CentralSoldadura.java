@@ -41,4 +41,21 @@ public class CentralSoldadura {
         }
         semaforo.release(); 
     }
+    
+    public int getOcupadas() {
+        synchronized (ocupadas) {          
+            int n = 0;
+            for (boolean b : ocupadas) {
+                if (b) {
+                    n++;
+                }
+            }
+            return n;
+        }
+    }
+
+    public int getNumEstacion() {
+        return ocupadas.length;   
+    }
+    
 }

@@ -15,6 +15,7 @@ import tasks.AGVTask;
 import tasks.RobotTask;
 import tasks.SensorAvariesTask;
 import tasks.SupervisorTask;
+import tasks.TecnicManteniment;
 import view.ConsoleView;
 import view.DashboardTask;
 
@@ -50,6 +51,7 @@ public class MainApp {
         Thread dash = new Thread(new DashboardTask(c1, central, supervisor, (ArrayList<RobotTask>) llistaRobots));
         Thread sensor = new Thread(new SensorAvariesTask(central, vista)); 
         sensor.setDaemon(true);
+        Thread tecnic = new Thread(new TecnicManteniment(central, vista)); 
        
         Thread frt1 = new Thread(rbt1);
         Thread frt2 = new Thread(rbt2);
@@ -62,6 +64,7 @@ public class MainApp {
         sup1.start(); 
         dash.start();
         sensor.start(); 
+        tecnic.start(); 
         
         frt1.start();
         frt2.start();
@@ -75,6 +78,7 @@ public class MainApp {
         avg2.interrupt();
         sup1.interrupt();   
         dash.interrupt();
+        tecnic.interrupt();
         
         frt1.interrupt();
         frt2.interrupt();
@@ -86,6 +90,7 @@ public class MainApp {
         avg2.join();
         sup1.join();
         dash.join();
+        tecnic.join();
         
         frt1.join();
         frt2.join();

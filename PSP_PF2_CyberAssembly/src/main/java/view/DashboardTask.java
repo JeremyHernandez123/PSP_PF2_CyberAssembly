@@ -47,7 +47,7 @@ public class DashboardTask implements Runnable {
                     robotsTxt = robotsTxt + "R" + r.getId() + ":" + r.getEstat() + "  ";
                 }
                 vista.mostrar(" ");
-                vista.mostrar("Estaciones ocupadas: " + central.getOcupadas() + ", n: " + central.getNumEstacion() + "\n Cinta: " + cinta.getOcupacion() + ", capacitat: " + cinta.getCapacitat() + "\n Alerta: " +  alerta);
+                vista.mostrar("Estaciones ocupadas: " + central.getOcupades() + ", n: " + central.getNumEstacions() + "\n Cinta: " + cinta.getOcupacion() + ", capacitat: " + cinta.getCapacitat() + "\n Alerta: " +  alerta);
                 Thread.sleep(1000);
                 vista.mostrar(" ");
                 vista.mostrar("   Robots: " + robotsTxt);

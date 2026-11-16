@@ -30,7 +30,7 @@ public class SensorAvariesTask implements Runnable{
                 Thread.sleep(1500 + random.nextInt(2000));
                 int estacio = central.averiarEstacioLliure();
                 if (estacio != -1) {
-                    vista.mostrar("Sensor: en la estacion: " + estacio);
+                    vista.mostrar("Sensor: en la estacio: " + estacio);
                 }
             }
         } catch (InterruptedException e) {

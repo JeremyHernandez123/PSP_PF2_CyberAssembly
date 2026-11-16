@@ -13,15 +13,16 @@ import view.ConsoleView;
  */
 public class TaulerRegistre {
     private final Semaphore  mutex = new Semaphore(1); 
-    private final ConsoleView vista = new ConsoleView(); 
+    private final ConsoleView vista; 
 
+    public TaulerRegistre(ConsoleView vista) {
+        this.vista = vista;
+    }
     
     public void firmarCertificado(int idRobot) throws InterruptedException{
         mutex.acquire(); 
         try {
-            vista.mostrar(" ");
             vista.mostrar("Robot " + idRobot + " firma el certificado");
-            vista.mostrar(" ");
             Thread.sleep(200); 
         } finally {
             mutex.release(); 

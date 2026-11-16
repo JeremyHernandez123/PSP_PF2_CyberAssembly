@@ -21,14 +21,15 @@ public class DashboardTask implements Runnable {
     private final CentralSoldadura central; 
     private final SupervisorCentral supervisor; 
     private List<RobotTask> llistaRobots = new ArrayList<>(); 
-    private final ConsoleView vista = new ConsoleView(); 
+    private final ConsoleView vista;  
 
     
-    public DashboardTask(CintaTransportadora cinta, CentralSoldadura central, SupervisorCentral supervisor, ArrayList<RobotTask> llistaRobots){
+    public DashboardTask(CintaTransportadora cinta, CentralSoldadura central, SupervisorCentral supervisor, ArrayList<RobotTask> llistaRobots, ConsoleView vista){
         this.cinta = cinta; 
         this.central = central; 
         this.supervisor = supervisor;
         this.llistaRobots = llistaRobots; 
+        this.vista = vista; 
     }
     
     @Override
@@ -46,12 +47,13 @@ public class DashboardTask implements Runnable {
                 for (RobotTask r : llistaRobots) {
                     robotsTxt = robotsTxt + "R" + r.getId() + ":" + r.getEstat() + "  ";
                 }
-                vista.mostrar(" ");
-                vista.mostrar("Estaciones ocupadas: " + central.getOcupades() + ", n: " + central.getNumEstacions() + "\n Cinta: " + cinta.getOcupacion() + ", capacitat: " + cinta.getCapacitat() + "\n Alerta: " +  alerta);
-                Thread.sleep(1000);
-                vista.mostrar(" ");
-                vista.mostrar("   Robots: " + robotsTxt);
-                
+                vista.mostrar("Estaciones ocupadas: " + central.getOcupades()
+                            + ", averiadas: " + central.getAveriades()
+                            + ", n: " + central.getNumEstacions()
+                            + "\n Cinta: " + cinta.getOcupacion() + ", capacitat: " + cinta.getCapacitat()
+                            + "\n Alerta: " + alerta
+                            + "\n   Robots: " + robotsTxt);
+                Thread.sleep(1000);                
             }   
         } catch(InterruptedException e) {
             Thread.currentThread().interrupt();

@@ -22,7 +22,7 @@ public class RobotTask implements Runnable{
     private final CentralSoldadura central;
     private final TaulerRegistre tauler;
     private final SupervisorCentral supervisor; 
-    private EstatRobot estatRobot = EstatRobot.ESPERANT_ALERTA; 
+    private volatile EstatRobot estatRobot = EstatRobot.ESPERANT_ALERTA; 
     
     public RobotTask(int id, CintaTransportadora cinta, CentralSoldadura central, TaulerRegistre tauler, SupervisorCentral supervisor) {
         this.id = id;

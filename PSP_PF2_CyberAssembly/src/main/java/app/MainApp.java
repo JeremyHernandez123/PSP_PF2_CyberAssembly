@@ -25,12 +25,12 @@ import view.DashboardTask;
  */
 public class MainApp {
     public static void main (String[] args) throws InterruptedException{
+        ConsoleView vista = new ConsoleView(); 
         CintaTransportadora c1 = new CintaTransportadora(3);
         CentralSoldadura central = new CentralSoldadura(3);
-        TaulerRegistre tauler= new TaulerRegistre();
         SupervisorCentral supervisor = new SupervisorCentral();  
         List<RobotTask> llistaRobots = new ArrayList<>();     
-        ConsoleView vista = new ConsoleView(); 
+        TaulerRegistre tauler= new TaulerRegistre(vista);
 
         
         RobotTask rbt1 = new RobotTask(1, c1, central, tauler, supervisor); 
@@ -45,10 +45,10 @@ public class MainApp {
         llistaRobots.add(rbt4); 
         llistaRobots.add(rbt5); 
         
-        Thread avg1 = new Thread(new AGVTask(1, c1));
-        Thread avg2 = new Thread(new AGVTask(2, c1));
+        Thread avg1 = new Thread(new AGVTask(1, c1, vista));
+        Thread avg2 = new Thread(new AGVTask(2, c1, vista));
         Thread sup1 = new Thread(new SupervisorTask(supervisor));
-        Thread dash = new Thread(new DashboardTask(c1, central, supervisor, (ArrayList<RobotTask>) llistaRobots));
+        Thread dash = new Thread(new DashboardTask(c1, central, supervisor, (ArrayList<RobotTask>) llistaRobots, vista));
         Thread sensor = new Thread(new SensorAvariesTask(central, vista)); 
         sensor.setDaemon(true);
         Thread tecnic = new Thread(new TecnicManteniment(central, vista)); 

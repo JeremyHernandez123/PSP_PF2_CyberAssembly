@@ -15,11 +15,12 @@ import view.ConsoleView;
 public class AGVTask implements Runnable{
     private CintaTransportadora cintaTransportadora;  
     private int id; 
-    private final ConsoleView vista = new ConsoleView(); 
+    private final ConsoleView vista; 
     
-    public AGVTask(int id, CintaTransportadora cintaTransportadora){
+    public AGVTask(int id, CintaTransportadora cintaTransportadora, ConsoleView vista ){
         this.id = id; 
-        this.cintaTransportadora = cintaTransportadora; 
+        this.cintaTransportadora = cintaTransportadora;
+        this.vista = vista; 
     }
     
     @Override
@@ -31,9 +32,7 @@ public class AGVTask implements Runnable{
                 Thread.sleep(500);
                 cintaTransportadora.depositar(contador);
                 contador++; 
-                vista.mostrar(" ");
                 vista.mostrar("AGV " + id + " deposita batería " + contador);
-                vista.mostrar(" ");
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();

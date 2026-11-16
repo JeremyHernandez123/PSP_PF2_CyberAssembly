@@ -14,6 +14,7 @@ import model.TaulerRegistre;
 import tasks.AGVTask;
 import tasks.RobotTask;
 import tasks.SupervisorTask;
+import view.ConsoleView;
 import view.DashboardTask;
 
 /**
@@ -27,6 +28,8 @@ public class MainApp {
         TaulerRegistre tauler= new TaulerRegistre();
         SupervisorCentral supervisor = new SupervisorCentral();  
         List<RobotTask> llistaRobots = new ArrayList<>();     
+        ConsoleView vista = new ConsoleView(); 
+
         
         RobotTask rbt1 = new RobotTask(1, c1, central, tauler, supervisor); 
         RobotTask rbt2 = new RobotTask(2, c1, central, tauler, supervisor); 
@@ -82,7 +85,7 @@ public class MainApp {
         frt4.join();
         frt5.join();
         
-       IO.println("Simulació finalitzada");
+       vista.mostrar("Simulació finalitzada");
     }
     
 }

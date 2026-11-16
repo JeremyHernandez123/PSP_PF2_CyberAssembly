@@ -21,6 +21,8 @@ public class DashboardTask implements Runnable {
     private final CentralSoldadura central; 
     private final SupervisorCentral supervisor; 
     private List<RobotTask> llistaRobots = new ArrayList<>(); 
+    private final ConsoleView vista = new ConsoleView(); 
+
     
     public DashboardTask(CintaTransportadora cinta, CentralSoldadura central, SupervisorCentral supervisor, ArrayList<RobotTask> llistaRobots){
         this.cinta = cinta; 
@@ -44,13 +46,11 @@ public class DashboardTask implements Runnable {
                 for (RobotTask r : llistaRobots) {
                     robotsTxt = robotsTxt + "R" + r.getId() + ":" + r.getEstat() + "  ";
                 }
-                IO.println("Estaciones ocupadas: " + central.getOcupadas() + ", n: " + central.getNumEstacion() + "\n Cinta: " + cinta.getOcupacion() + ", capacitat: " + cinta.getCapacitat() + "\n Alerta: " +  alerta);
+                vista.mostrar(" ");
+                vista.mostrar("Estaciones ocupadas: " + central.getOcupadas() + ", n: " + central.getNumEstacion() + "\n Cinta: " + cinta.getOcupacion() + ", capacitat: " + cinta.getCapacitat() + "\n Alerta: " +  alerta);
                 Thread.sleep(1000);
-                IO.println(" ---------------------------------------- ");
-                IO.println(" ");
-                IO.println("   Robots: " + robotsTxt);
-                IO.println(" ");
-                IO.println(" ---------------------------------------- ");
+                vista.mostrar(" ");
+                vista.mostrar("   Robots: " + robotsTxt);
                 
             }   
         } catch(InterruptedException e) {

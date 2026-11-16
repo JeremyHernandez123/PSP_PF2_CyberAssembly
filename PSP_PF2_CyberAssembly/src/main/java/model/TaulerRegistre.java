@@ -5,6 +5,7 @@
 package model;
 
 import java.util.concurrent.Semaphore;
+import view.ConsoleView;
 
 /**
  *
@@ -12,13 +13,15 @@ import java.util.concurrent.Semaphore;
  */
 public class TaulerRegistre {
     private final Semaphore  mutex = new Semaphore(1); 
-    
+    private final ConsoleView vista = new ConsoleView(); 
+
     
     public void firmarCertificado(int idRobot) throws InterruptedException{
         mutex.acquire(); 
         try {
-            IO.println(" ");
-            IO.println("Robot " + idRobot + " firma el certificado");
+            vista.mostrar(" ");
+            vista.mostrar("Robot " + idRobot + " firma el certificado");
+            vista.mostrar(" ");
             Thread.sleep(200); 
         } finally {
             mutex.release(); 

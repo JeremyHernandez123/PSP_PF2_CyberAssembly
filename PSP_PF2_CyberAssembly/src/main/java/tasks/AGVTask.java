@@ -6,6 +6,7 @@ package tasks;
 
 import java.time.Duration;
 import model.CintaTransportadora;
+import view.ConsoleView;
 
 /**
  *
@@ -14,6 +15,7 @@ import model.CintaTransportadora;
 public class AGVTask implements Runnable{
     private CintaTransportadora cintaTransportadora;  
     private int id; 
+    private final ConsoleView vista = new ConsoleView(); 
     
     public AGVTask(int id, CintaTransportadora cintaTransportadora){
         this.id = id; 
@@ -29,8 +31,9 @@ public class AGVTask implements Runnable{
                 Thread.sleep(500);
                 cintaTransportadora.depositar(contador);
                 contador++; 
-                IO.println(" ");
-                IO.println("AGV " + id + " deposita batería " + contador);
+                vista.mostrar(" ");
+                vista.mostrar("AGV " + id + " deposita batería " + contador);
+                vista.mostrar(" ");
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
